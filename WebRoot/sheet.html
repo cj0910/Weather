@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>答题</title>
+    <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        #div-btn{
+           text-align: center;
+        }
+        #btn-ans{
+            text-align: center;
+            width: 150px;
+        }
+    </style>
+    
+    <script type="text/javascript">
+        var a,b,c,d;
+        var standard1;
+        var standard2;
+        var standard3;
+        var standard4;
+        var score1,score2,score3,score4;
+        $(document).ready(function(){
+        	    $.get("/Weather/question", function(data,status){
+        	    //console.log(data);
+        	    //alert(data);
+        	    var aa=eval('('+data+')');
+        	    console.log(aa);
+        	    var q1=aa.question1;
+        	    var q2=aa.question2;
+        	    var q3=aa.question3;
+        	    var q4=aa.question4;
+        	    
+        	    standard1=q1.ans;
+        	    standard2=q2.ans;
+        	    standard3=q3.ans;
+        	    standard4=q4.ans;
+        	    a=q1.tid;
+        	    b=q2.tid;
+        	    c=q3.tid;
+        	    d=q4.tid;
+        	    
+        	    $("#t1").text(q1.question);
+        		$("#a11").html(q1.opta);
+        		$("#a12").html(q1.optb);
+        		$("#a13").html(q1.optc);
+        		$("#a14").html(q1.optd);
+        		
+        		$("#t2").text(q2.question);
+        		$("#a21").html(q2.opta);
+        		$("#a22").html(q2.optb);
+        		$("#a23").html(q2.optc);
+        		$("#a24").html(q2.optd);
+        		
+        		$("#t3").text(q3.question);
+        		$("#a31").html(q3.opta);
+        		$("#a32").html(q3.optb);
+        		$("#a33").html(q3.optc);
+        		$("#a34").html(q3.optd);
+        		
+        		$("#t4").text(q4.question);
+        		$("#a41").html(q4.opta);
+        		$("#a42").html(q4.optb);
+        		$("#a43").html(q4.optc);
+        		$("#a44").html(q4.optd);
+        	    });
+        	    
+        	    $("#btn-ans").click(function(){
+        			var s1 = $("input[name=radiobutton1]:checked").val();
+        			var s2 = $("input[name=radiobutton2]:checked").val();
+        			var s3 = $("input[name=radiobutton3]:checked").val();
+        			var s4 = $("input[name=radiobutton4]:checked").val();
+        			alert("我的作答是："+s1+s1+s3+s4+"\n我的得分是："+s);
+        			if(s1==standard1)
+        			{
+        			  score1="25";
+        			}else{
+        			  score1="0";
+        			}
+        			if(s2==standard2)
+        			{
+        			  score2="25";
+        			}else{
+        			  score1="0";
+        			}
+        			if(s3==standard3)
+        			{
+        			  score3="25";
+        			}else{
+        			  score3="0";
+        			}
+        			if(s4==standard4)
+        			{
+        			  score4="25";
+        			}else{
+        			  score4="0";
+        			}
+        			var s=number(score1)+number(score2)+number(score3)+number(score4);
+        			alert("我的作答是："+s1+s1+s3+s4+"\n我的得分是："+s);
+        			var s=s1+s2+s3+s4;
+        			$.post("/Weather/insert_score",
+        			{
+        			  score:s
+        			});
+        			
+        		/*	$.post("/Weather/judgment",
+        			{
+        			  j1:s1,
+        			  j2:s2,
+        			  j3:s3,
+        			  j4:s4,
+        			  t1:a,
+        			  t2:b,
+        			  t3:c,
+        			  t4:d
+        			},
+        			 function(data,status){
+        			    alert("已交卷\n我的作答是:" + s1+s2+s3+s4 + "\n我的得分是: 100分" +"\n谢谢");
+            	    });*/
+            });
+        });
+    </script>
+    
+</head>
+<body>
+<div class="container">
+<h3 align="center">第一题</h3>
+<p id="t1">  </p>
+    <input type="radio" name="radiobutton1" value="A" checked><span id="a11"></span><br>
+    <input type="radio" name="radiobutton1" value="B"><span id="a12"></span><br>
+    <input type="radio" name="radiobutton1" value="C"><span id="a13"></span><br>
+    <input type="radio" name="radiobutton1" value="D"><span id="a14"></span><br>
+<h3 align="center">第二题</h3>
+<p id="t2"></p>
+    <input type="radio" name="radiobutton2" value="A" checked><span id="a21"></span><br>
+    <input type="radio" name="radiobutton2" value="B"><span id="a22"></span><br>
+    <input type="radio" name="radiobutton2" value="C"><span id="a23"></span><br>
+    <input type="radio" name="radiobutton2" value="D"><span id="a24"></span><br>
+<h3 align="center">第三题</h3>
+<p id="t3"></p>
+    <input type="radio" name="radiobutton3" value="A" checked><span id="a31"></span><br>
+    <input type="radio" name="radiobutton3" value="B"><span id="a32"></span><br>
+    <input type="radio" name="radiobutton3" value="C"><span id="a33"></span><br>
+    <input type="radio" name="radiobutton3" value="D"><span id="a34"></span><br>
+<h3 align="center">第四题</h3>
+<p id="t4"></p>
+    <input type="radio" name="radiobutton4" value="A" checked><span id="a41"></span><br>
+    <input type="radio" name="radiobutton4" value="B"><span id="a42"></span><br>
+    <input type="radio" name="radiobutton4" value="C"><span id="a43"></span><br>
+    <input type="radio" name="radiobutton4" value="D"><span id="a44"></span><br>
+          
+    <br>
+    <div id="div-btn">
+    <button id="btn-ans" type="button" class="btn btn-success">交 卷</button>
+    </div>
+    <br>
+    <br>
+</div>
+</body>
+</html>

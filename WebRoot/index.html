@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js">
+</script>
+<script>
+    $(document).ready(function(){
+        $("#p1").click(function(){
+          	var sid = $("#sid").val();     //将输入的学号（获取文本框里的值）传给sid
+            $.post("/Weather/pipei",      //post的作用是将网页上请求的参数传递给服务器，再将服务端返回的值通过function获得
+            	    {                    //weather pipei的作用是在web.xml中通过地址pipei找到需要合作的java文件与之匹配
+            	        id: sid          //将参数id传给服务器
+            	    },
+            	        function(data,status){
+            	        //alert("数据: \n" + data + "\n状态: " + status);
+            	        $("#result").text(data);
+            	    });
+        });
+    });
+</script>
+</head>
+
+<body>
+输入学号/姓名: <input type="text" id="sid"><br>
+
+<button id="p1">查询学生</button>
+<h3> 查询结果：</h3>
+<h3 id="result">  </h3>
+</body>
+</html>
