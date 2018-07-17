@@ -37,7 +37,8 @@ public class score extends HttpServlet {
 			ResultSet rs = db.executeQuery("select * from st where id = '" + score +"'");
 			String sql="insert into answers.score_sheet(score) values(";
 			sql = sql + score + ";";
-			
+			db.execute(sql);
+			db.close();
 			
 			response.setCharacterEncoding("utf-8");
 			PrintWriter out = response.getWriter();
